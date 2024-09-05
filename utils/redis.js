@@ -21,8 +21,7 @@ class RadisClient {
   }
 
   async get(key) {
-    const value = await this.client.get(key);
-    return value;
+    return this.client.getAsync(key).then((res) => res);
   }
 
   async set(key, value, duration) {
