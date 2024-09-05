@@ -17,26 +17,26 @@ class RadisClient {
     this.client.getAsync = promisify(this.client.get).bind(this.client);
   }
 
-    isAlive() {
-      return this.client.connected;
-    }
+  isAlive() {
+    return this.client.connected;
+  }
 
-    async get(key) {
-      return await this.client.get(key);
-    }
+  async get(key) {
+    return await this.client.get(key);
+  }
 
-    async set(key, value, duration) {
-      await this.client.set(key, value);
-      await this.client.expire(key, duration);
-    }
+  async set(key, value, duration) {
+    await this.client.set(key, value);
+    await this.client.expire(key, duration);
+  }
 
-    async del(key) {
-      const data = await this.get(key);
-      if (!data) {
-        throw new Error(`${key}: not found`);
-      };
-      return this.client.del(key);
+  async del(key) {
+    const data = await this.get(key);
+    if (!data) {
+      throw new Error(`${key}: not found`);
     }
+    return this.client.del(key);
+  }
 }
 
 const redisClient = new RadisClient();
