@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-const { MongoClient } = require('Mongodb');
-
+const { MongoClient } = require('mongodb');
 
 class DBClient {
   constructor() {
@@ -11,7 +10,7 @@ class DBClient {
 
     this.client = new MongoClient(url, { useUnifiedTopology: true });
     this.client.connect();
-    this.db = this.client.db(database); 
+    this.db = this.client.db(database);
   }
 
   isAlive() {

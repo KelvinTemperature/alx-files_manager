@@ -1,4 +1,3 @@
-
 import express from 'express';
 import indexRoutes from './routes/index';
 
@@ -9,5 +8,5 @@ app.use(express.json());
 app.use('/', indexRoutes);
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
+  console.log(`Server running on port ${port}`);
+});

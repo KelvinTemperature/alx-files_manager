@@ -3,7 +3,6 @@ const redis = require('redis');
 const { promisify } = require('util');
 
 class RadisClient {
-  
   constructor() {
     this.client = redis
       .createClient()
@@ -22,7 +21,7 @@ class RadisClient {
   }
 
   async get(key) {
-    return await this.client.get(key);
+    return this.client.get(key);
   }
 
   async set(key, value, duration) {

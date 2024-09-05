@@ -1,4 +1,3 @@
-
 import { Routes } from 'express';
 import AppController from '../controllers/AppController';
 import UsersController from '../controllers/UsersController';
@@ -31,4 +30,4 @@ routes.put('/files/:id/unpublish', async (req, res) => FilesController.putUnpubl
 
 routes.get('/files/:id/data', async (req, res) => FilesController.getFile(req, res));
 
-export default indexRoutes;
+export default routes;

@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import { verifyPassword } from '../utils/auth';
 import dbClient from '../utils/db';
 import HTTPError from '../utils/httpErrors';
@@ -6,14 +5,12 @@ import { generateUuid } from '../utils/misc';
 import redisClient from '../utils/redis';
 import UsersController from './UsersController';
 
-
 class AuthController {
   static async getConnect(req, res) {
     const authHeader = req.headers.authorization || '';
     const authToken = authHeader.split('')[1] || '';
-    //decode token
-    const [email, password] = Buffer.from(authToken, 'base64',
-    ).toString().split(':');
+    // decode token
+    const [email, password] = Buffer.from(authToken, 'base64').toString().split(':');
 
     const dbUser = await dbClient.db.collection('users').findOne({ email });
 
@@ -25,7 +22,7 @@ class AuthController {
     }
 
     const token = generateUuid();
-    await redisClient.set(`auth_${token}`, dbUser._id.toString(), 86400)
+    await redisClient.set(`auth_${token}`, dbUser._id.toString(), 86400);
 
     return res.status(200).json({ token });
   }
@@ -45,8 +42,7 @@ class AuthController {
         .then(() => res.status(204).send(null))
         .catch(() => HTTPError.internalServerError(res,
           'An error occurred while invalidating API key'));
-    }
-    catch (error) {
+    } catch (error) {
       return HTTPError.unauthorized(res);
     }
   }
