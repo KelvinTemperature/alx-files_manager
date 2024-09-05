@@ -17,6 +17,29 @@ class DBClient {
     return this.client.isConnected();
   }
 
+  async isAliveWithTimeout(timeout = 2000) {
+    return new Promise((resolve) => {
+      const timer = setTimeout(() => {
+        console.error('MongoDB ping timed out');
+        resolve(false);
+      }, timeout);
+
+      this.client
+        .db()
+        .admin()
+        .ping()
+        .then(() => {
+          clearTimeout(timer);
+          resolve(true);
+        })
+        .catch((error) => {
+          clearTimeout(timer);
+          console.error('MongoDB ping failed:', error.message);
+          resolve(false);
+        });
+    });
+  }
+
   async nbUsers() {
     return this.db.collection('users').countDocuments();
   }
