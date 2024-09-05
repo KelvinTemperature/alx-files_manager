@@ -1,9 +1,9 @@
 
 import { Routes } from 'express';
-import AppController from '../controller/AppController';
-import UsersController from '../controller/UsersController';
-import AuthController from '../controller/AuthController';
-import FilesController from '../controller/FilesController';
+import AppController from '../controllers/AppController';
+import UsersController from '../controllers/UsersController';
+import AuthController from '../controllers/AuthController';
+import FilesController from '../controllers/FilesController';
 
 const routes = Routes();
 
