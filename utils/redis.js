@@ -1,31 +1,34 @@
 #!/usr/bin/env node
-import { createClient } from 'redis';
+const redis = require('redis');
+const { promisify } = require('util');
 
 class RadisClient {
   
-    constructor() {
-      const client = createClient();
-      client.on('error', err => {
-        console.log('Redis client not connected to the server:', err.toString());
-      });
-
-      client.on('connect', () => {
+  constructor() {
+    this.client = redis
+      .createClient()
+      .on('error', (err) => {
+        console.error(`Redis client not connected to the server: ${err.message}`);
+      })
+      .on('connect', () => {
         console.log('Redis client connected to the server');
       });
-    };
+
+    this.client.getAsync = promisify(this.client.get).bind(this.client);
+  }
 
     isAlive() {
       return this.client.connected;
-    };
+    }
 
     async get(key) {
       return await this.client.get(key);
-    };
+    }
 
     async set(key, value, duration) {
       await this.client.set(key, value);
       await this.client.expire(key, duration);
-    };
+    }
 
     async del(key) {
       const data = await this.get(key);
@@ -33,7 +36,7 @@ class RadisClient {
         throw new Error(`${key}: not found`);
       };
       return this.client.del(key);
-    };
+    }
 }
 
 const redisClient = new RadisClient();
