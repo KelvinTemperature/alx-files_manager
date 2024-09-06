@@ -8,7 +8,7 @@ const router = Router();
 
 router.get('/status', async (req, res) => AppController.getStatus(req, res));
 
-router.get('/stat', async (req, res) => AppController.getStats(req, res));
+router.get('/stats', async (req, res) => AppController.getStats(req, res));
 
 router.post('/users', async (req, res) => UsersController.postNew(req, res));
 
